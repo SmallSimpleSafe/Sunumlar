@@ -11,14 +11,18 @@
         background: gray;
     }
     img {
-        position: fixed;
+        position: absolute;
         width: 100%;
         top: 0; left: 0;
         opacity: 0;
-        transition: opacity 3s ease;
+        transition: opacity 2s ease;
     }
-    div {
-        position: fixed;
+    #main {
+        position: absolute;
+        top: 0;
+    }
+    .box {
+        position: inherit;
         border: 1px solid cyan;
         cursor: pointer;
         width: 15vw;
@@ -46,21 +50,23 @@
 
 <body>
 
-<p id=version>V0.4</p>
-<p id=fileName></p>
-
 <img id=harita src=harita01.jpg></img>
 <img id=oyun></img>
 
-<div id=d01 title='1.havza.jpg'></div>
-<div id=d02 title='2.bent.jpg'></div>
-<div id=d03 title='3.galeri.jpg'></div>
-<div id=d04 title='4.havuz.jpg'></div>
-<div id=d05 title='5.kemer.jpg'></div>
-<div id=d06 title='6.maksem.jpg'></div>
-<div id=d07 title='7.cesme.jpg'></div>
-<div id=d08 title='8.sadirvan.jpg'></div>
-<div id=d09 title='9.hamam.jpg'></div>
+<div id=main>
+  <p id=version>V0.4A</p>
+  <p id=fileName></p>
+
+  <div id=d01 class=box title='1.havza'></div>
+  <div id=d02 class=box title='2.bent'></div>
+  <div id=d03 class=box title='3.galeri'></div>
+  <div id=d04 class=box title='4.havuz'></div>
+  <div id=d05 class=box title='5.kemer'></div>
+  <div id=d06 class=box title='6.maksem'></div>
+  <div id=d07 class=box title='7.cesme'></div>
+  <div id=d08 class=box title='8.sadirvan'></div>
+  <div id=d09 class=box title='9.hamam'></div>
+</div>
 
 <script src="https://lab.hakim.se/zoom-js/js/zoom.js"></script>
 <script>
@@ -69,7 +75,7 @@ var elt //selected game
 const dur = 2000 //msec
 const smooth = "-webkit-transform 2s ease"
 function boxStyle(s='') {
-    for (let d of document.querySelectorAll('div'))
+    for (let d of document.querySelectorAll('.box'))
         d.style.display = s
 }
 function handleClick(e) {
@@ -80,19 +86,19 @@ function handleClick(e) {
     console.log("zoom", elt.title)
     document.body.style.transition = smooth
     zoom.to({ element: elt, pan: false })
+    //harita.onclick = toGame
     setTimeout(toGame, 2*dur)
 }
 function toGame() {
-    let file = elt.title
-    if (!file) return
-    oyun.src = file
+    //harita.onclick = ''
+    if (!elt.title) return
+    oyun.src = elt.title+'.jpg'
     harita.style.opacity = ''
-    let k = file.indexOf('.jpg')
-    let name = file.substring(0, k)
-    fileName.innerText = name
+    fileName.innerText = elt.title
     boxStyle('none')
     setTimeout(faded, dur)
   function faded() {
+    console.log("faded")
     document.body.style.transition = ''
     zoom.out()
     oyun.style.opacity = 1
@@ -112,7 +118,7 @@ function toMap(e) {
   }
 }
 
-	document.body.onclick = handleClick
+	main.onclick = handleClick
 	harita.style.opacity = 1
 </script>
 </body>
