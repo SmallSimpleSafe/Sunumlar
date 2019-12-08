@@ -68,6 +68,7 @@
   <div id=d09 class=box title='9.hamam'></div>
 </div>
 
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=Ayb0S4YG"></script>
 <script src="https://lab.hakim.se/zoom-js/js/zoom.js"></script>
 <script>
 "use strict";
@@ -95,6 +96,7 @@ function toGame() {
     oyun.src = elt.title+'.jpg'
     harita.style.opacity = ''
     fileName.innerText = elt.title
+    responsiveVoice.speak(elt.title)
     boxStyle('none')
     setTimeout(faded, dur)
   function faded() {
@@ -120,6 +122,7 @@ function toMap(e) {
 
 	main.onclick = handleClick
 	harita.style.opacity = 1
+	console.log(responsiveVoice)
 </script>
 </body>
 </html>
